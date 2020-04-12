@@ -10,3 +10,6 @@ Repository for future Ludum Dare 46 Entry.
 
 using unity engine, probably 2D my dude.
 
+### Plugins
+
+* GitHub for Unity
