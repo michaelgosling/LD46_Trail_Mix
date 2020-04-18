@@ -5,26 +5,36 @@ using UnityEngine;
 public class ItBehaviour : MonoBehaviour
 {
     public float speed = 8f;
+    public float trajectoryAngle = 0.75f;
+    public string playerCharacter = "Fox";
+
     private bool isHeld;
     private Rigidbody2D rb;
     private Vector2 vector2;
-    private GameObject fox;
+    private GameObject player;
     // Collision detection
     void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.name == "Fox"){
+        // if the object thats been collided with is the player
+        // we want to trigger 'it" to be in a held state, and then
+        // turn physics off for more performant updating
+        if(col.gameObject.name == playerCharacter){
                 isHeld = true;
                 rb.isKinematic = true;
-                fox = col.gameObject;
+                player = col.gameObject;
         }
     }
 
     void FixedUpdate() {
         if(isHeld){
-            rb.position = new Vector2(fox.transform.position.x, fox.transform.position.y + 1);
+            // update the object to be above player
+            rb.position = new Vector2(player.transform.position.x, player.transform.position.y + 1);
+            // this is for "throwing" the object
             if(Input.GetKeyDown(KeyCode.Space)){
                 isHeld = false;
-                rb.velocity = Vector2.up * speed;
+                // throwing the object on an angle, depending on player input direction
+                rb.velocity = new Vector2(Input.GetAxis("Horizontal") * (speed * trajectoryAngle), speed);
+                // make sure to turn physics back on!
                 rb.isKinematic = false;
             }
         }
@@ -35,11 +45,5 @@ public class ItBehaviour : MonoBehaviour
     {
         isHeld = false;
         rb = GetComponent<Rigidbody2D>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
