@@ -21,9 +21,7 @@ public class ItBehaviour : MonoBehaviour
 
     void FixedUpdate() {
         if(isHeld){
-            var newRB = fox.transform.position;
-            newRB.y += 1;
-            rb.position = newRB;
+            rb.position = new Vector2(fox.transform.position.x, fox.transform.position.y + 1);
             if(Input.GetKeyDown(KeyCode.Space)){
                 isHeld = false;
                 Vector2 throwVelocity = new Vector2(Input.GetAxis("Horizontal") * (speed/2), speed);
