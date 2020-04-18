@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItBehaviour : MonoBehaviour
 {
-    public float speed;
+    public float speed = 8f;
     private bool isHeld;
     private Rigidbody2D rb;
     private Vector2 vector2;
@@ -14,6 +14,7 @@ public class ItBehaviour : MonoBehaviour
     {
         if(col.gameObject.name == "Fox"){
                 isHeld = true;
+                rb.isKinematic = true;
                 fox = col.gameObject;
         }
     }
@@ -26,7 +27,7 @@ public class ItBehaviour : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.Space)){
                 isHeld = false;
                 rb.velocity = Vector2.up * speed;
-                
+                rb.isKinematic = false;
             }
         }
     }
