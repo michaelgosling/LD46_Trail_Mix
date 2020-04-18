@@ -5,29 +5,36 @@ using UnityEngine;
 public class ItBehaviour : MonoBehaviour
 {
     public float speed;
+    private bool isHeld;
     private Rigidbody2D rb;
     private Vector2 vector2;
+    private GameObject fox;
     // Collision detection
     void OnCollisionEnter2D(Collision2D col)
     {
-        Debug.Log($"gameobject collision: {col.gameObject.name}");
         if(col.gameObject.name == "Fox"){
-            rb.velocity = Vector2.up * speed;
-            // Debug.Log("collision ok! updating!");
-            // Vector2 v2 = new Vector2(0, 10);
-            // vector2 = v2.normalized * speed;
-            // rb.MovePosition(rb.position + vector2 * Time.fixedDeltaTime);
+                isHeld = true;
+                fox = col.gameObject;
         }
     }
 
     void FixedUpdate() {
-        //Debug.Log("Updating shroom: " + vector2);
-        //rb.MovePosition(rb.position + vector2 * Time.fixedDeltaTime);
+        if(isHeld){
+            var newRB = fox.transform.position;
+            newRB.y += 1;
+            rb.position = newRB;
+            if(Input.GetKeyDown(KeyCode.Space)){
+                isHeld = false;
+                rb.velocity = Vector2.up * speed;
+                
+            }
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        isHeld = false;
         rb = GetComponent<Rigidbody2D>();
     }
 
