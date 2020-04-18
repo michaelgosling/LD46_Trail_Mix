@@ -26,7 +26,8 @@ public class ItBehaviour : MonoBehaviour
             rb.position = newRB;
             if(Input.GetKeyDown(KeyCode.Space)){
                 isHeld = false;
-                rb.velocity = Vector2.up * speed;
+                Vector2 throwVelocity = new Vector2(Input.GetAxis("Horizontal") * (speed/2), speed);
+                rb.velocity = throwVelocity;
                 rb.isKinematic = false;
             }
         }
