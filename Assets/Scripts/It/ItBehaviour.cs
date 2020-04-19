@@ -27,8 +27,10 @@ public class ItBehaviour : MonoBehaviour
         } 
         else if(isActive) 
         {
+            isActive = isHeld = false;
             Debug.Log("HIT THE GROUND! BAAAAHH");
-            StartCoroutine(GroundHit(itSprite));
+            Global.Instance.LifeLost(this.rb);
+            // StartCoroutine(GroundHit(itSprite));
             // Tilemap Floor <-- we may want to add specific collision?
             // for now, it's anything that isn't your player after initial pick up.
         }
