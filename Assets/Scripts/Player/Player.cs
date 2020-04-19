@@ -4,41 +4,68 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    /// <summary>
-    /// Default HP for the player.
-    /// </summary>
-    public static readonly int DEFAULT_HP = 100;
-    /// <summary>
-    /// The default speed for the player
-    /// </summary>
-    public static readonly float DEFAULT_SPEED = 1f;
 
     /// <summary>
-    /// How much to reduce speed by when carrying It.
+    /// Player Default Values
     /// </summary>
-    public static readonly float CARRYING_SPEED_REDUCTION = 0.5f;
+    public class Defaults
+    {
+        // using key name strings for input mapping, see https://docs.unity3d.com/Manual/class-InputManager.html
+        public static readonly string JUMP_KEY = "space";
+        public static readonly string MOVE_LEFT_KEY = "left";
+        public static readonly string MOVE_RIGHT_KEY = "right";
+        public static readonly string THROW_KEY = "z";
+        // public static readonly int HP = 100;
+        public static readonly float X_SPEED = 10f;
+        public static readonly float CARRYING_VELOCITY_FACTOR = 0.66f;
+    }
+
+    // Input Mapping
+    /// <summary>
+    /// Jump Key by Name, See https://docs.unity3d.com/Manual/class-InputManager.html
+    /// </summary>
+    public string jumpKey = Player.Defaults.JUMP_KEY;
+
+    /// <summary>
+    /// Move Left key by name, See https://docs.unity3d.com/Manual/class-InputManager.html
+    /// </summary>
+    public string moveLeftKey = Player.Defaults.MOVE_LEFT_KEY;
+
+    /// <summary>
+    /// Move Right Key by name, See https://docs.unity3d.com/Manual/class-InputManager.html
+    /// </summary>
+    public string moveRightKey = Player.Defaults.MOVE_RIGHT_KEY;
+
+    /// <summary>
+    /// Throw Key by name, See https://docs.unity3d.com/Manual/class-InputManager.html
+    /// </summary>
+    public string throwKey = Player.Defaults.THROW_KEY;
+
+    /// <summary>
+    /// Factor to apply to x Velocity when carrying It.
+    /// </summary>
+    public float carryingVelocityFactor = Player.Defaults.CARRYING_VELOCITY_FACTOR;
+
 
     /// <summary>
     /// If the player is carrying It
     /// </summary>
     /// <value>boolean</value>
     public bool CarryingIt { get; private set; } = true;
-    /// <summary>
-    /// Player health points
-    /// </summary>
-    /// <value>Integer</value>
-    public int HP { get; private set; } = DEFAULT_HP;
+
+    // public int HP { get; private set; } = Player.Defaults.HP;
 
     /// <summary>
     /// Player speed
     /// </summary>
     /// <value>Float</value>
-    public float movementSpeed = DEFAULT_SPEED;
+    public float xSpeed = Player.Defaults.X_SPEED;
 
     /// <summary>
     /// Physics body
     /// </summary>
     private Rigidbody2D body;
+
     /// <summary>
     /// Player velocity
     /// </summary>
@@ -74,7 +101,7 @@ public class Player : MonoBehaviour
     void CatchIt(GameObject it)
     {
         CarryingIt = true;
-        It = it;
+        if (It == null) It = it;
     }
 
     /// <summary>
@@ -94,58 +121,46 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// Start is called before the first frame update
+    /// Update the player's velocity
     /// </summary>
-    void Start()
+    void UpdateVelocity()
     {
+        float newXVelocity = 0.0f;
 
-    }
-
-    /// <summary>
-    /// Logic to apply at an unfixed interval update
-    /// </summary>
-    void Update()
-    {
-        // Vector2 v2 = new Vector2(Input.GetAxis("Horizontal"), 0);
-        // velocity = v2.normalized * Speed;
-    }
-
-    /// <summary>
-    /// Apply user input to the player object
-    /// </summary>
-    void ApplyInput()
-    {
-        float xForce = 0.0f;
-        float yForce = 0.0f;
-
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(moveRightKey))
         {
-            xForce = movementSpeed;
-            yForce = 0.0f;
+            newXVelocity = xSpeed;
         }
-        else if (Input.GetKey(KeyCode.LeftArrow))
+        else if (Input.GetKey(moveLeftKey))
         {
-            xForce = movementSpeed * -1;
-            yForce = 0.0f;
+            newXVelocity = xSpeed * -1;
         }
 
-        // TODO: Cap velocity/speed
-        Vector2 force = new Vector2(xForce, yForce);
-        body.AddForce(force, ForceMode2D.Impulse);
+
+        body.velocity = velocity = new Vector2(newXVelocity * (CarryingIt ? carryingVelocityFactor : 1), body.velocity.y);
     }
+
 
     /// <summary>
     /// Handle Movement Logic
     /// </summary>
-    void Move()
+    void UpdateMovement()
     {
         if (body != null)
         {
-            ApplyInput();
+            UpdateVelocity();
         }
         else
         {
             Debug.LogWarning("RigidBody not attached to player " + gameObject.name);
+        }
+    }
+
+    void UpdateState()
+    {
+        if (CarryingIt && Input.GetKeyDown(throwKey))
+        {
+            ThrowIt();
         }
     }
 
@@ -155,6 +170,16 @@ public class Player : MonoBehaviour
     /// </summary>
     void FixedUpdate()
     {
-        Move();
+        if (Debug.isDebugBuild && Input.anyKeyDown)
+        {
+            var logMsg = "Inputs Activated: ";
+            if (Input.GetKeyDown(jumpKey)) logMsg += "[Jump]";
+            if (Input.GetKeyDown(moveLeftKey)) logMsg += "[Move Left]";
+            if (Input.GetKeyDown(moveRightKey)) logMsg += "[Move Right]";
+            if (Input.GetKeyDown(throwKey)) logMsg += "[Throw]";
+            Debug.Log(logMsg);
+        }
+        UpdateState();
+        UpdateMovement();
     }
 }

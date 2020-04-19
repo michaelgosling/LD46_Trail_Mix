@@ -137,7 +137,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &129120012
 Transform:
@@ -5153,7 +5153,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1088189610
 Transform:
@@ -6419,7 +6419,7 @@ Rigidbody2D:
   m_Mass: 1.0857165
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -6437,7 +6437,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c04de484ef44077baeb53c7c74ebb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 1
+  jumpKey: z
+  moveLeftKey: left
+  moveRightKey: right
+  throwKey: space
+  carryingVelocityFactor: 0.66
+  xSpeed: 10
 --- !u!58 &1414623385
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -6516,7 +6521,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2128407195
 Transform:
