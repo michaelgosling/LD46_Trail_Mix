@@ -12,6 +12,7 @@ public class ItBehaviour : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 vector2;
     private GameObject player;
+    // private Global global = Global.Instance;
     // Collision detection
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -22,6 +23,14 @@ public class ItBehaviour : MonoBehaviour
                 isHeld = true;
                 rb.isKinematic = true;
                 player = col.gameObject;
+        } else {
+            Global.Instance.LifeLost(this.rb);
+            // global.lives--;
+            // if(global.lives == 0) {
+            //     Debug.Log("YOU DIED!");
+            // } else {
+
+            // }
         }
     }
 
