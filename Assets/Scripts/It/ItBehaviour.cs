@@ -9,28 +9,29 @@ public class ItBehaviour : MonoBehaviour
     public string playerCharacter = "Fox";
 
     private bool isHeld;
+    private bool isActive;
     private Rigidbody2D rb;
     private Vector2 vector2;
     private GameObject player;
-    // private Global global = Global.Instance;
+    private SpriteRenderer itSprite;
     // Collision detection
     void OnCollisionEnter2D(Collision2D col)
     {
         // if the object thats been collided with is the player
         // we want to trigger 'it" to be in a held state, and then
         // turn physics off for more performant updating
-        if(col.gameObject.name == playerCharacter){
-                isHeld = true;
-                rb.isKinematic = true;
-                player = col.gameObject;
-        } else {
+        if(col.gameObject.name == playerCharacter)
+        {
+            isHeld = isActive = rb.isKinematic = true;
+            player = col.gameObject;
+        } 
+        else if(isActive) 
+        {
+            Debug.Log("HIT THE GROUND! BAAAAHH");
             Global.Instance.LifeLost(this.rb);
-            // global.lives--;
-            // if(global.lives == 0) {
-            //     Debug.Log("YOU DIED!");
-            // } else {
-
-            // }
+            // StartCoroutine(GroundHit(itSprite));
+            // Tilemap Floor <-- we may want to add specific collision?
+            // for now, it's anything that isn't your player after initial pick up.
         }
     }
 
@@ -49,10 +50,26 @@ public class ItBehaviour : MonoBehaviour
         }
     }
 
+    private IEnumerator GroundHit(SpriteRenderer sprite) 
+    {
+        // this makes it drop throught the map.
+        // GetComponent<BoxCollider2D>().enabled = false;
+
+        // animation of color change (could be whatever) to indicate that it ded.
+        WaitForSeconds wait = new WaitForSeconds(0.4f);
+        for(var i = 0; i < 5; i++){
+            sprite.color = i % 2 == 0 ? Color.cyan : Color.red; 
+            yield return wait;
+        }
+        // peace out gangsta
+        Destroy(this.gameObject);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         isHeld = false;
         rb = GetComponent<Rigidbody2D>();
+        itSprite = GetComponent<SpriteRenderer>();
     }
 }
