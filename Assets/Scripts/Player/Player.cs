@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
         public static readonly string MOVE_LEFT_KEY = "left";
         public static readonly string MOVE_RIGHT_KEY = "right";
         public static readonly float X_SPEED = 10f;
+        public static readonly float Y_SPEED = 10f;
         public static readonly float CARRYING_VELOCITY_FACTOR = 0.66f;
     }
 
@@ -43,6 +44,7 @@ public class Player : MonoBehaviour
     bool moveRightPressed;
     bool moveLeftPressed;
     bool jumpPressed;
+    bool jumpExhausted;
 
     #endregion
 
@@ -54,10 +56,14 @@ public class Player : MonoBehaviour
     public float carryingVelocityFactor = Player.Defaults.CARRYING_VELOCITY_FACTOR;
 
     /// <summary>
-    /// Player speed
+    /// Player x speed
     /// </summary>
-    /// <value>Float</value>
     public float xSpeed = Player.Defaults.X_SPEED;
+
+    /// <summary>
+    /// Player y speed
+    /// </summary>
+    public float ySpeed = Player.Defaults.Y_SPEED;
 
     /// <summary>
     /// Physics body
@@ -82,6 +88,9 @@ public class Player : MonoBehaviour
             case "It":
                 // if (!CarryingIt) CarryingIt = true;
                 break;
+            case "Floor":
+                jumpExhausted = false;
+                break;
             default:
                 break;
         }
@@ -97,6 +106,7 @@ public class Player : MonoBehaviour
         moveLeftPressed = false;
         moveRightPressed = false;
         jumpPressed = false;
+        jumpExhausted = false;
     }
 
 
@@ -115,7 +125,7 @@ public class Player : MonoBehaviour
     /// </summary>
     void UpdateVelocity()
     {
-        var xVelocityModifier = Global.Instance.it.Held ? carryingVelocityFactor : 1;
+        var velocityMod = Global.Instance.it.Held ? carryingVelocityFactor : 1;
 
         float newXVelocity = 0.0f;
         float newYVelocity = body?.velocity.y ?? 0.0f;
@@ -128,10 +138,13 @@ public class Player : MonoBehaviour
         {
             newXVelocity += xSpeed * -1;
         }
+        if (jumpPressed && !jumpExhausted)
+        {
+            newYVelocity += ySpeed;
+            jumpExhausted = true;
+        }
 
-        // TODO: Jump Logic
-
-        velocity = new Vector2(newXVelocity * xVelocityModifier, newYVelocity);
+        velocity = new Vector2(newXVelocity * velocityMod, newYVelocity * velocityMod);
     }
 
     /// <summary>
