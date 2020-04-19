@@ -16,6 +16,6 @@ public class UI : MonoBehaviour
         for(var i = 0; i < Global.Instance.lives; i++){
             lifeDisplay += lifeBlood;
         }
-        lifeText.text = "Health: " + lifeDisplay;
+        lifeText.text = "Lives: " + lifeDisplay;
     }
 }
