@@ -24,7 +24,7 @@ public class Global : MonoBehaviour
     {   
         this.lives--;
         if(this.lives == 0){
-            Debug.Log("GAME OVER LOOOOOOSER");
+            new MainMenu().GameOver();
         } else {
             rb.position = new Vector2(1,2);
         }
