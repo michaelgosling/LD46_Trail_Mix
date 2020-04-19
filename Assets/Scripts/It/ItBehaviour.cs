@@ -27,6 +27,7 @@ public class ItBehaviour : MonoBehaviour
         } 
         else if(isActive) 
         {
+            isActive = isHeld = false;
             Debug.Log("HIT THE GROUND! BAAAAHH");
             Global.Instance.LifeLost(this.rb);
             // StartCoroutine(GroundHit(itSprite));
