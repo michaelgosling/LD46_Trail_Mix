@@ -14,8 +14,10 @@ public class Player : MonoBehaviour
         public static readonly string JUMP_KEY = "space";
         public static readonly string MOVE_LEFT_KEY = "left";
         public static readonly string MOVE_RIGHT_KEY = "right";
+        public static readonly string DASH_KEY = "x";
         public static readonly float X_SPEED = 10f;
         public static readonly float Y_SPEED = 10f;
+        public static readonly float DASH_SPEED_MOD = 2f;
         public static readonly float CARRYING_VELOCITY_FACTOR = 0.66f;
     }
 
@@ -37,18 +39,38 @@ public class Player : MonoBehaviour
     /// </summary>
     public string moveRightKey = Player.Defaults.MOVE_RIGHT_KEY;
 
+    /// <summary>
+    /// Dash Key by name, See https://docs.unity3d.com/Manual/class-InputManager.html
+    /// </summary>
+    public string dashKey = Player.Defaults.DASH_KEY;
+
     #endregion
 
-    #region Input State
+    #region State
 
     bool moveRightPressed;
     bool moveLeftPressed;
     bool jumpPressed;
     bool jumpExhausted;
+    bool dashPressed;
+    bool dashExhausted;
+    bool facingRight;
+    bool dashing;
+    bool jumping;
 
     #endregion
 
-    #region Fields / Properties
+    #region Properties
+
+    public bool IsJumping { get { return jumping; } }
+    public bool IsDashing { get { return dashing; } }
+
+    public bool FacingRight { get { return facingRight; } }
+    public bool FacingLeft { get { return !facingRight; } }
+
+    #endregion
+
+    #region Fields
 
     /// <summary>
     /// Factor to apply to x Velocity when carrying It.
@@ -64,6 +86,11 @@ public class Player : MonoBehaviour
     /// Player y speed
     /// </summary>
     public float ySpeed = Player.Defaults.Y_SPEED;
+
+    /// <summary>
+    /// Modifier to apply when dashing
+    /// </summary>
+    public float dashSpeedMod = Player.Defaults.DASH_SPEED_MOD;
 
     /// <summary>
     /// Physics body
@@ -90,6 +117,9 @@ public class Player : MonoBehaviour
                 break;
             case "Floor":
                 jumpExhausted = false;
+                dashExhausted = false;
+                dashing = false;
+                jumping = false;
                 break;
             default:
                 break;
@@ -107,6 +137,11 @@ public class Player : MonoBehaviour
         moveRightPressed = false;
         jumpPressed = false;
         jumpExhausted = false;
+        dashExhausted = false;
+        dashPressed = false;
+        dashing = false;
+        jumping = false;
+        facingRight = true;
     }
 
 
@@ -133,10 +168,12 @@ public class Player : MonoBehaviour
         if (moveRightPressed)
         {
             newXVelocity += xSpeed;
+            if (!moveLeftPressed) facingRight = true;
         }
         if (moveLeftPressed)
         {
             newXVelocity += xSpeed * -1;
+            if (!moveRightPressed) facingRight = false;
         }
         if (jumpPressed && !jumpExhausted)
         {
