@@ -14,11 +14,14 @@ public class Player : MonoBehaviour
         public static readonly string JUMP_KEY = "space";
         public static readonly string MOVE_LEFT_KEY = "left";
         public static readonly string MOVE_RIGHT_KEY = "right";
-        public static readonly string THROW_KEY = "z";
-        // public static readonly int HP = 100;
+        public static readonly string DASH_KEY = "x";
         public static readonly float X_SPEED = 10f;
+        public static readonly float Y_SPEED = 10f;
+        public static readonly float DASH_SPEED_MOD = 2f;
         public static readonly float CARRYING_VELOCITY_FACTOR = 0.66f;
     }
+
+    #region Input Mapping
 
     // Input Mapping
     /// <summary>
@@ -37,29 +40,57 @@ public class Player : MonoBehaviour
     public string moveRightKey = Player.Defaults.MOVE_RIGHT_KEY;
 
     /// <summary>
-    /// Throw Key by name, See https://docs.unity3d.com/Manual/class-InputManager.html
+    /// Dash Key by name, See https://docs.unity3d.com/Manual/class-InputManager.html
     /// </summary>
-    public string throwKey = Player.Defaults.THROW_KEY;
+    public string dashKey = Player.Defaults.DASH_KEY;
+
+    #endregion
+
+    #region State
+
+    bool moveRightPressed;
+    bool moveLeftPressed;
+    bool jumpPressed;
+    bool jumpExhausted;
+    bool dashPressed;
+    bool dashExhausted;
+    bool facingRight;
+    bool dashing;
+    bool jumping;
+
+    #endregion
+
+    #region Properties
+
+    public bool IsJumping { get { return jumping; } }
+    public bool IsDashing { get { return dashing; } }
+
+    public bool FacingRight { get { return facingRight; } }
+    public bool FacingLeft { get { return !facingRight; } }
+
+    #endregion
+
+    #region Fields
 
     /// <summary>
     /// Factor to apply to x Velocity when carrying It.
     /// </summary>
     public float carryingVelocityFactor = Player.Defaults.CARRYING_VELOCITY_FACTOR;
 
-
     /// <summary>
-    /// If the player is carrying It
+    /// Player x speed
     /// </summary>
-    /// <value>boolean</value>
-    public bool CarryingIt { get; private set; } = true;
-
-    // public int HP { get; private set; } = Player.Defaults.HP;
-
-    /// <summary>
-    /// Player speed
-    /// </summary>
-    /// <value>Float</value>
     public float xSpeed = Player.Defaults.X_SPEED;
+
+    /// <summary>
+    /// Player y speed
+    /// </summary>
+    public float ySpeed = Player.Defaults.Y_SPEED;
+
+    /// <summary>
+    /// Modifier to apply when dashing
+    /// </summary>
+    public float dashSpeedMod = Player.Defaults.DASH_SPEED_MOD;
 
     /// <summary>
     /// Physics body
@@ -71,12 +102,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private Vector2 velocity;
 
-    /// <summary>
-    /// Private reference to It.
-    /// </summary>
-    /// <value>GameObject</value>
-
-    private GameObject It { get; set; }
+    #endregion
 
     /// <summary>
     /// Collision Handling
@@ -87,29 +113,17 @@ public class Player : MonoBehaviour
         switch (col.gameObject.tag)
         {
             case "It":
-                CatchIt(col.gameObject);
+                // if (!CarryingIt) CarryingIt = true;
+                break;
+            case "Floor":
+                jumpExhausted = false;
+                dashExhausted = false;
+                dashing = false;
+                jumping = false;
                 break;
             default:
                 break;
         }
-    }
-
-    /// <summary>
-    /// Catch the "It" object and assign it to a private property to keep a reference, just in case.
-    /// </summary>
-    /// <param name="it">Object to keep alive.</param>
-    void CatchIt(GameObject it)
-    {
-        CarryingIt = true;
-        if (It == null) It = it;
-    }
-
-    /// <summary>
-    /// Throw the "It" object
-    /// </summary>
-    public void ThrowIt()
-    {
-        if (CarryingIt) CarryingIt = false;
     }
 
     /// <summary>
@@ -118,6 +132,27 @@ public class Player : MonoBehaviour
     void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+        velocity = body.velocity;
+        moveLeftPressed = false;
+        moveRightPressed = false;
+        jumpPressed = false;
+        jumpExhausted = false;
+        dashExhausted = false;
+        dashPressed = false;
+        dashing = false;
+        jumping = false;
+        facingRight = true;
+    }
+
+
+    /// <summary>
+    /// Parse Player Input and store in booleans to reference later when applying state.
+    /// </summary>
+    void ParseInput()
+    {
+        moveRightPressed = Input.GetKey(moveRightKey);
+        moveLeftPressed = Input.GetKey(moveLeftKey);
+        jumpPressed = Input.GetKeyDown(jumpKey);
     }
 
     /// <summary>
@@ -125,43 +160,45 @@ public class Player : MonoBehaviour
     /// </summary>
     void UpdateVelocity()
     {
+        var velocityMod = Global.Instance.it.Held ? carryingVelocityFactor : 1;
+
         float newXVelocity = 0.0f;
+        float newYVelocity = body?.velocity.y ?? 0.0f;
 
-        if (Input.GetKey(moveRightKey))
+        if (moveRightPressed)
         {
-            newXVelocity = xSpeed;
+            newXVelocity += xSpeed;
+            if (!moveLeftPressed) facingRight = true;
         }
-        else if (Input.GetKey(moveLeftKey))
+        if (moveLeftPressed)
         {
-            newXVelocity = xSpeed * -1;
+            newXVelocity += xSpeed * -1;
+            if (!moveRightPressed) facingRight = false;
+        }
+        if (jumpPressed && !jumpExhausted)
+        {
+            newYVelocity += ySpeed;
+            jumpExhausted = true;
         }
 
-
-        body.velocity = velocity = new Vector2(newXVelocity * (CarryingIt ? carryingVelocityFactor : 1), body.velocity.y);
+        velocity = new Vector2(newXVelocity * velocityMod, newYVelocity * velocityMod);
     }
-
 
     /// <summary>
-    /// Handle Movement Logic
+    /// Update player state
     /// </summary>
-    void UpdateMovement()
-    {
-        if (body != null)
-        {
-            UpdateVelocity();
-        }
-        else
-        {
-            Debug.LogWarning("RigidBody not attached to player " + gameObject.name);
-        }
-    }
-
     void UpdateState()
     {
-        if (CarryingIt && Input.GetKeyDown(throwKey))
-        {
-            ThrowIt();
-        }
+        ParseInput();
+        UpdateVelocity();
+    }
+
+    /// <summary>
+    /// Apply the updated state to the game object
+    /// </summary>
+    void ApplyState()
+    {
+        body.velocity = velocity;
     }
 
 
@@ -170,16 +207,7 @@ public class Player : MonoBehaviour
     /// </summary>
     void FixedUpdate()
     {
-        if (Debug.isDebugBuild && Input.anyKeyDown)
-        {
-            var logMsg = "Inputs Activated: ";
-            if (Input.GetKeyDown(jumpKey)) logMsg += "[Jump]";
-            if (Input.GetKeyDown(moveLeftKey)) logMsg += "[Move Left]";
-            if (Input.GetKeyDown(moveRightKey)) logMsg += "[Move Right]";
-            if (Input.GetKeyDown(throwKey)) logMsg += "[Throw]";
-            //Debug.Log(logMsg);
-        }
         UpdateState();
-        UpdateMovement();
+        ApplyState();
     }
 }

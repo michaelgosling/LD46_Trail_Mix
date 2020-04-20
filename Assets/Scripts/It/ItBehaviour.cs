@@ -20,6 +20,8 @@ public class ItBehaviour : MonoBehaviour
     public string playerCharacter = ItBehaviour.Defaults.PLAYER_CHARACTER;
     public string throwKey = ItBehaviour.Defaults.THROW_KEY;
 
+    public bool Held { get { return isHeld; } }
+
     private bool isHeld;
     private bool isActive;
     private Rigidbody2D rb;
@@ -32,14 +34,12 @@ public class ItBehaviour : MonoBehaviour
         // if the object thats been collided with is the player
         // we want to trigger 'it" to be in a held state, and then
         // turn physics off for more performant updating
-        Debug.Log($"Object hit!: {col.gameObject.name}");
-
-        if(col.gameObject.name == playerCharacter)
+        if (col.gameObject.name == playerCharacter)
         {
             isHeld = isActive = rb.isKinematic = true;
             player = col.gameObject;
-        } 
-        else if(isActive) 
+        }
+        else if (isActive)
         {
             isActive = isHeld = false;
             Global.Instance.LifeLost(this.rb);
@@ -49,11 +49,10 @@ public class ItBehaviour : MonoBehaviour
         }
     }
 
-    void FixedUpdate() {
-        Debug.Log("bunbun x: " + rb.position.x);
-        Debug.Log("Camera rect x: " + Camera.main.rect.position.x);
-        Debug.Log("Camera main x: " + Camera.main.transform.position.x);
-        if(isHeld){
+    void FixedUpdate()
+    {
+        if (isHeld)
+        {
             // update the object to be above player
             rb.position = new Vector2(player.transform.position.x, player.transform.position.y + carryHeight);
             // this is for "throwing" the object
@@ -67,15 +66,16 @@ public class ItBehaviour : MonoBehaviour
         }
     }
 
-    private IEnumerator GroundHit(SpriteRenderer sprite) 
+    private IEnumerator GroundHit(SpriteRenderer sprite)
     {
         // this makes it drop throught the map.
         // GetComponent<BoxCollider2D>().enabled = false;
 
         // animation of color change (could be whatever) to indicate that it ded.
         WaitForSeconds wait = new WaitForSeconds(0.4f);
-        for(var i = 0; i < 5; i++){
-            sprite.color = i % 2 == 0 ? Color.cyan : Color.red; 
+        for (var i = 0; i < 5; i++)
+        {
+            sprite.color = i % 2 == 0 ? Color.cyan : Color.red;
             yield return wait;
         }
         // peace out gangsta

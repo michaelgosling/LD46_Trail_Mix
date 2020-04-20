@@ -8,24 +8,34 @@ public class Global : MonoBehaviour
     public static Global Instance;
     // global persistant vars we want
     public int lives = 3;
+    public Player player;
+    public ItBehaviour it;
 
-    
+
     // https://giphy.com/gifs/star-trek-tng-the-next-generation-bKnEnd65zqxfq/tile
-    void Awake() 
+    void Awake()
     {
-        if(Instance == null) {
+        if (Instance == null)
+        {
             Instance = this;
-        } else {
+        }
+        else
+        {
             Destroy(gameObject);
         }
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        it = GameObject.FindWithTag("It").GetComponent<ItBehaviour>();
     }
 
     public void LifeLost(Rigidbody2D rb)
-    {   
+    {
         this.lives--;
-        if(this.lives == 0){
+        if (this.lives == 0)
+        {
             new MainMenu().GameOver();
-        } else {
+        } 
+        else 
+        {
             var cam = Camera.main.transform.position;
             rb.position = new Vector2(cam.x, 8);
         }
