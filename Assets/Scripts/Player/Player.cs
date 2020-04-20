@@ -217,7 +217,7 @@ public class Player : MonoBehaviour
             var logMsg = "holdingBun: " + animator.GetBool("holdingBun");
             logMsg += ", jumping: " + animator.GetBool("jumping");
             logMsg += ", Speed: " + animator.GetFloat("Speed");
-            Debug.Log(logMsg);
+            //Debug.Log(logMsg);
         }
 
     }

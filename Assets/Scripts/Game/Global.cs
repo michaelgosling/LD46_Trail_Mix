@@ -29,15 +29,10 @@ public class Global : MonoBehaviour
 
     public void LifeLost(Rigidbody2D rb)
     {
+        // var cam = Camera.main.transform.position;
+        // rb.position = new Vector2(cam.x, 8);
         this.lives--;
         if (this.lives == 0)
-        {
             new MainMenu().GameOver();
-        } 
-        else 
-        {
-            var cam = Camera.main.transform.position;
-            rb.position = new Vector2(cam.x, 8);
-        }
     }
 }

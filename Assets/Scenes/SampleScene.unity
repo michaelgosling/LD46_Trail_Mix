@@ -5118,11 +5118,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8baa147207aaf487fb9046d7166b4d81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerTag: Player
   freeFallSprite: {fileID: 21300000, guid: e548de459a29d4eb4bed98157d98f023, type: 3}
   throwSprite: {fileID: 21300000, guid: a57d3441b6d894253b5b5232a2e1a84e, type: 3}
   speed: 8
   trajectoryAngle: 0.75
-  carryHeight: 0.5
+  carryHeight: 2.5
   playerCharacter: Fox
   throwKey: z
 --- !u!1 &1020933252

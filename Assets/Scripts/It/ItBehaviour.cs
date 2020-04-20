@@ -8,7 +8,7 @@ public class ItBehaviour : MonoBehaviour
     {
         public static readonly float SPEED = 8.0f;
         public static readonly float TRAJECTORY_ANGLE = 0.75f;
-        public static readonly float CARRY_HEIGHT = 0.5f;
+        public static readonly float CARRY_HEIGHT = 1.7f;
         public static readonly string PLAYER_CHARACTER = "Fox";
         public static readonly string THROW_KEY = "z";
     }
@@ -26,7 +26,9 @@ public class ItBehaviour : MonoBehaviour
 
     private bool isHeld;
     private bool isActive;
+    private bool isDead;
     private Rigidbody2D rb;
+    private BoxCollider2D itCollider;
     private Vector2 vector2;
     private GameObject player;
     private SpriteRenderer itSprite;
@@ -39,15 +41,14 @@ public class ItBehaviour : MonoBehaviour
         if (col.gameObject.tag == playerTag)
         {
             isHeld = isActive = rb.isKinematic = true;
+            itCollider.enabled = false;
             player = col.gameObject;
         }
         else if (isActive)
         {
             isActive = isHeld = false;
+            rb.position = new Vector2(Camera.main.transform.position.x, 8);
             Global.Instance.LifeLost(this.rb);
-            // StartCoroutine(GroundHit(itSprite));
-            // Tilemap Floor <-- we may want to add specific collision?
-            // for now, it's anything that isn't your player after initial pick up.
         }
     }
 
@@ -60,41 +61,36 @@ public class ItBehaviour : MonoBehaviour
             rb.position = new Vector2(player.transform.position.x, player.transform.position.y + carryHeight);
             // this is for "throwing" the object
             if(Input.GetKeyDown(throwKey)){
-                isHeld = false;
                 // throwing the object on an angle, depending on player input direction
                 rb.velocity = new Vector2(Input.GetAxis("Horizontal") * (speed * trajectoryAngle), speed);
                 // make sure to turn physics back on!
                 rb.isKinematic = false;
+                isHeld = false;
             }
         }
         else 
         {
             itSprite.enabled = true;
-            gameObject.SetActive(true);
-            //get direction of bun travel, if going down, open the chute.
+            // get direction of bun travel, if going down, open the chute.
+            itCollider.enabled = true;
             var travel = transform.InverseTransformDirection(rb.velocity);
-            if(travel.y < -1)
+            Debug.Log(travel.y);
+            if(travel.y < -1) 
+            { 
                 itSprite.sprite = freeFallSprite;
+                // no fall off map, no need buggy code
+                // if(travel.y < -10){
+                //     rb.position = new Vector2(Camera.main.transform.position.x, 8);
+                //     if(!isActive) 
+                //     {
+                //         isActive = isHeld = false;
+                //         Global.Instance.LifeLost(rb);
+                //     }
+                // }
+            }
             else
                 itSprite.sprite = throwSprite;
-            Debug.Log($"Bun go: {travel.y}");
         }
-    }
-
-    private IEnumerator GroundHit(SpriteRenderer sprite)
-    {
-        // this makes it drop throught the map.
-        // GetComponent<BoxCollider2D>().enabled = false;
-
-        // animation of color change (could be whatever) to indicate that it ded.
-        WaitForSeconds wait = new WaitForSeconds(0.4f);
-        for (var i = 0; i < 5; i++)
-        {
-            sprite.color = i % 2 == 0 ? Color.cyan : Color.red;
-            yield return wait;
-        }
-        // peace out gangsta
-        Destroy(this.gameObject);
     }
 
     // Start is called before the first frame update
@@ -102,6 +98,7 @@ public class ItBehaviour : MonoBehaviour
     {
         isHeld = false;
         rb = GetComponent<Rigidbody2D>();
+        itCollider = GetComponent<BoxCollider2D>();
         itSprite = GetComponent<SpriteRenderer>();
     }
 }
