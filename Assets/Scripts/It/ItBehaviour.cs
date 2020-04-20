@@ -7,6 +7,7 @@ public class ItBehaviour : MonoBehaviour
     public float speed = 8f;
     public float trajectoryAngle = 0.75f;
     public string playerCharacter = "Fox";
+    public string playerTag = "Player";
 
     public bool Held { get { return isHeld; } }
 
@@ -22,7 +23,7 @@ public class ItBehaviour : MonoBehaviour
         // if the object thats been collided with is the player
         // we want to trigger 'it" to be in a held state, and then
         // turn physics off for more performant updating
-        if (col.gameObject.name == playerCharacter)
+        if (col.gameObject.tag == playerTag)
         {
             isHeld = isActive = rb.isKinematic = true;
             player = col.gameObject;

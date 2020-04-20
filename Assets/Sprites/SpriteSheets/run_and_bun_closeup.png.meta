@@ -1,0 +1,320 @@
+fileFormatVersion: 2
+guid: 6b08e5be75de2244faf6366f1776ebcf
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5744123549833347408
+    second: run_with_bun_1
+  - first:
+      213: -977131850159761086
+    second: run_with_bun_2
+  - first:
+      213: 6881341933925857330
+    second: run_with_bun_3
+  - first:
+      213: -6768279574571700872
+    second: run_with_bun_4
+  - first:
+      213: 679842475692036856
+    second: run_and_bun_closeup_4
+  - first:
+      213: -7309675522699592570
+    second: run_and_bun_closeup_5
+  - first:
+      213: -3920343970661320689
+    second: run_and_bun_closeup_6
+  - first:
+      213: 1118350183280901561
+    second: run_and_bun_closeup_7
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 2000
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: run_with_bun_1
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 2534
+        width: 1871
+        height: 2058
+      alignment: 9
+      pivot: {x: 0.6024605, y: 0.34723356}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 051c5c55fe937bf40800000000000000
+      internalID: 5744123549833347408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: run_with_bun_2
+      rect:
+        serializedVersion: 2
+        x: 2290
+        y: 2473
+        width: 1656
+        height: 2119
+      alignment: 9
+      pivot: {x: 0.52315295, y: 0.36248788}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 249d18462c78072f0800000000000000
+      internalID: -977131850159761086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: run_with_bun_3
+      rect:
+        serializedVersion: 2
+        x: 4088
+        y: 2514
+        width: 1603
+        height: 2054
+      alignment: 9
+      pivot: {x: 0.5095676, y: 0.34559792}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23876ada7007f7f50800000000000000
+      internalID: 6881341933925857330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: run_with_bun_4
+      rect:
+        serializedVersion: 2
+        x: 5951
+        y: 2388
+        width: 1591
+        height: 2074
+      alignment: 9
+      pivot: {x: 0.54819775, y: 0.3558067}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87d2f19369d3212a0800000000000000
+      internalID: -6768279574571700872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: run_and_bun_closeup_4
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 232
+        width: 1872
+        height: 2013
+      alignment: 9
+      pivot: {x: 0.6065021, y: 0.34000945}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f298d231294f6900800000000000000
+      internalID: 679842475692036856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: run_and_bun_closeup_5
+      rect:
+        serializedVersion: 2
+        x: 2250
+        y: 130
+        width: 1655
+        height: 2111
+      alignment: 9
+      pivot: {x: 0.5185333, y: 0.3655988}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68c7f1627d0de8a90800000000000000
+      internalID: -7309675522699592570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: run_and_bun_closeup_6
+      rect:
+        serializedVersion: 2
+        x: 4222
+        y: 240
+        width: 1603
+        height: 2050
+      alignment: 9
+      pivot: {x: 0.52391845, y: 0.3503778}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f083367fde32899c0800000000000000
+      internalID: -3920343970661320689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: run_and_bun_closeup_7
+      rect:
+        serializedVersion: 2
+        x: 6049
+        y: 69
+        width: 1590
+        height: 2079
+      alignment: 9
+      pivot: {x: 0.55305004, y: 0.3561535}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bd73f0019d258f00800000000000000
+      internalID: 1118350183280901561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
