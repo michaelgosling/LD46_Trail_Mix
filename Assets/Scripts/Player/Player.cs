@@ -14,10 +14,10 @@ public class Player : MonoBehaviour
         public static readonly string JUMP_KEY = "space";
         public static readonly string MOVE_LEFT_KEY = "left";
         public static readonly string MOVE_RIGHT_KEY = "right";
-        public static readonly string DASH_KEY = "x";
+        // public static readonly string DASH_KEY = "x";
         public static readonly float X_SPEED = 10f;
         public static readonly float Y_SPEED = 10f;
-        public static readonly float DASH_SPEED_MOD = 2f;
+        // public static readonly float DASH_SPEED_MOD = 2f;
         public static readonly float CARRYING_VELOCITY_FACTOR = 0.66f;
     }
 
@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Dash Key by name, See https://docs.unity3d.com/Manual/class-InputManager.html
     /// </summary>
-    public string dashKey = Player.Defaults.DASH_KEY;
+    // public string dashKey = Player.Defaults.DASH_KEY;
 
     #endregion
 
@@ -52,21 +52,11 @@ public class Player : MonoBehaviour
     bool moveLeftPressed;
     bool jumpPressed;
     bool jumpExhausted;
-    bool dashPressed;
-    bool dashExhausted;
+    // bool dashPressed;
+    // bool dashExhausted;
     bool facingRight;
-    bool dashing;
+    // bool dashing;
     bool jumping;
-
-    #endregion
-
-    #region Properties
-
-    public bool IsJumping { get { return jumping; } }
-    public bool IsDashing { get { return dashing; } }
-
-    public bool FacingRight { get { return facingRight; } }
-    public bool FacingLeft { get { return !facingRight; } }
 
     #endregion
 
@@ -90,12 +80,22 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Modifier to apply when dashing
     /// </summary>
-    public float dashSpeedMod = Player.Defaults.DASH_SPEED_MOD;
+    // public float dashSpeedMod = Player.Defaults.DASH_SPEED_MOD;
 
     /// <summary>
     /// Physics body
     /// </summary>
     private Rigidbody2D body;
+
+    /// <summary>
+    /// Player Animator Controller
+    /// </summary>
+    private Animator animator;
+
+    /// <summary>
+    /// Player Sprite Renderer
+    /// </summary>
+    private SpriteRenderer spriteRenderer;
 
     /// <summary>
     /// Player velocity
@@ -112,14 +112,11 @@ public class Player : MonoBehaviour
     {
         switch (col.gameObject.tag)
         {
-            case "It":
-                // if (!CarryingIt) CarryingIt = true;
-                break;
             case "Floor":
                 jumpExhausted = false;
-                dashExhausted = false;
-                dashing = false;
                 jumping = false;
+                // dashExhausted = false;
+                // dashing = false;
                 break;
             default:
                 break;
@@ -132,15 +129,22 @@ public class Player : MonoBehaviour
     void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
         velocity = body.velocity;
+
         moveLeftPressed = false;
         moveRightPressed = false;
         jumpPressed = false;
+        // dashPressed = false;
+
         jumpExhausted = false;
-        dashExhausted = false;
-        dashPressed = false;
-        dashing = false;
+        // dashExhausted = false;
+
+        // dashing = false;
         jumping = false;
+
         facingRight = true;
     }
 
@@ -179,6 +183,7 @@ public class Player : MonoBehaviour
         {
             newYVelocity += ySpeed;
             jumpExhausted = true;
+            jumping = true;
         }
 
         velocity = new Vector2(newXVelocity * velocityMod, newYVelocity * velocityMod);
@@ -198,7 +203,23 @@ public class Player : MonoBehaviour
     /// </summary>
     void ApplyState()
     {
+        // apply velocity to rigidbody
         body.velocity = velocity;
+
+        // update animation parameters and sprite renderer
+        spriteRenderer.flipX = !facingRight;
+        animator.SetBool("holdingBun", Global.Instance.it.Held);
+        animator.SetBool("jumping", jumping);
+        animator.SetFloat("Speed", Mathf.Abs(velocity.x));
+
+        if (Debug.isDebugBuild)
+        {
+            var logMsg = "holdingBun: " + animator.GetBool("holdingBun");
+            logMsg += ", jumping: " + animator.GetBool("jumping");
+            logMsg += ", Speed: " + animator.GetFloat("Speed");
+            Debug.Log(logMsg);
+        }
+
     }
 
 
