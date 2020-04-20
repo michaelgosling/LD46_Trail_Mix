@@ -171,22 +171,22 @@ public class Player : MonoBehaviour
 
         if (moveRightPressed)
         {
-            newXVelocity += xSpeed;
+            newXVelocity += xSpeed * velocityMod;
             if (!moveLeftPressed) facingRight = true;
         }
         if (moveLeftPressed)
         {
-            newXVelocity += xSpeed * -1;
+            newXVelocity += xSpeed * velocityMod * -1;
             if (!moveRightPressed) facingRight = false;
         }
         if (jumpPressed && !jumpExhausted)
         {
-            newYVelocity += ySpeed;
+            newYVelocity += ySpeed * velocityMod;
             jumpExhausted = true;
             jumping = true;
         }
 
-        velocity = new Vector2(newXVelocity * velocityMod, newYVelocity * velocityMod);
+        velocity = new Vector2(newXVelocity, newYVelocity);
     }
 
     /// <summary>
@@ -211,14 +211,6 @@ public class Player : MonoBehaviour
         animator.SetBool("holdingBun", Global.Instance.it.Held);
         animator.SetBool("jumping", jumping);
         animator.SetFloat("Speed", Mathf.Abs(velocity.x));
-
-        if (Debug.isDebugBuild)
-        {
-            var logMsg = "holdingBun: " + animator.GetBool("holdingBun");
-            logMsg += ", jumping: " + animator.GetBool("jumping");
-            logMsg += ", Speed: " + animator.GetFloat("Speed");
-            //Debug.Log(logMsg);
-        }
 
     }
 

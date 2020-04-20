@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItBehaviour : MonoBehaviour
 {
-    public class Defaults 
+    public class Defaults
     {
         public static readonly float SPEED = 8.0f;
         public static readonly float TRAJECTORY_ANGLE = 0.75f;
@@ -41,6 +41,8 @@ public class ItBehaviour : MonoBehaviour
         if (col.gameObject.tag == playerTag)
         {
             isHeld = isActive = rb.isKinematic = true;
+            rb.Sleep();
+            itSprite.enabled = false;
             itCollider.enabled = false;
             player = col.gameObject;
         }
@@ -56,27 +58,34 @@ public class ItBehaviour : MonoBehaviour
     {
         if (isHeld)
         {
-            itSprite.enabled = false;
+            // itSprite.enabled = false;
             // update the object to be above player
-            rb.position = new Vector2(player.transform.position.x, player.transform.position.y + carryHeight);
+            // rb.position = new Vector2(player.transform.position.x, player.transform.position.y + carryHeight);
             // this is for "throwing" the object
-            if(Input.GetKeyDown(throwKey)){
-                // throwing the object on an angle, depending on player input direction
-                rb.velocity = new Vector2(Input.GetAxis("Horizontal") * (speed * trajectoryAngle), speed);
+            if (Input.GetKeyDown(throwKey))
+            {
+                rb.position = new Vector2(player.transform.position.x, player.transform.position.y + carryHeight);
                 // make sure to turn physics back on!
                 rb.isKinematic = false;
+                itSprite.enabled = true;
+                rb.WakeUp();
+
+                // throwing the object on an angle, depending on player input direction
+                rb.velocity = new Vector2(Input.GetAxis("Horizontal") * (speed * trajectoryAngle), speed);
+                itCollider.enabled = true;
+
                 isHeld = false;
             }
         }
-        else 
+        else
         {
-            itSprite.enabled = true;
+            // itSprite.enabled = true;
             // get direction of bun travel, if going down, open the chute.
-            itCollider.enabled = true;
+            // itCollider.enabled = true;
             var travel = transform.InverseTransformDirection(rb.velocity);
             Debug.Log(travel.y);
-            if(travel.y < -1) 
-            { 
+            if (travel.y < -1)
+            {
                 itSprite.sprite = freeFallSprite;
                 // no fall off map, no need buggy code
                 // if(travel.y < -10){
@@ -93,12 +102,20 @@ public class ItBehaviour : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         isHeld = false;
         rb = GetComponent<Rigidbody2D>();
         itCollider = GetComponent<BoxCollider2D>();
         itSprite = GetComponent<SpriteRenderer>();
     }
+
+    // Start is called before the first frame update
+    // void Start()
+    // {
+    // isHeld = false;
+    // rb = GetComponent<Rigidbody2D>();
+    // itCollider = GetComponent<BoxCollider2D>();
+    // itSprite = GetComponent<SpriteRenderer>();
+    // }
 }
