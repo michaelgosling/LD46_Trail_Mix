@@ -13,6 +13,7 @@ public class ItBehaviour : MonoBehaviour
         public static readonly string THROW_KEY = "z";
     }
 
+    public string playerTag = "Player";
     public Sprite freeFallSprite;
     public Sprite throwSprite;
     public float speed = ItBehaviour.Defaults.SPEED;
@@ -35,7 +36,7 @@ public class ItBehaviour : MonoBehaviour
         // if the object thats been collided with is the player
         // we want to trigger 'it" to be in a held state, and then
         // turn physics off for more performant updating
-        if (col.gameObject.name == playerCharacter)
+        if (col.gameObject.tag == playerTag)
         {
             isHeld = isActive = rb.isKinematic = true;
             player = col.gameObject;
@@ -70,9 +71,6 @@ public class ItBehaviour : MonoBehaviour
         {
             itSprite.enabled = true;
             gameObject.SetActive(true);
-            if(rb.position.y < Camera.main.transform.position.y - 10){
-                Global.Instance.LifeLost(rb);
-            }
             //get direction of bun travel, if going down, open the chute.
             var travel = transform.InverseTransformDirection(rb.velocity);
             if(travel.y < -1)
