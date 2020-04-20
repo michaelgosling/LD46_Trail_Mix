@@ -43,20 +43,16 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 155bdfada3708455a8aeadaadf9db3b1, type: 3}
-    totalSpriteSurfaceArea: 4119684
+    totalSpriteSurfaceArea: 2555820
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: c3a8ec608aed743b68f8429d7b4b4262, type: 3}
-  - {fileID: 21300000, guid: b263c6f1dd4574ed08d3e7ce0a7102f7, type: 3}
+  - {fileID: 21300000, guid: 31ff84e17462849739fc82bd2117d8d5, type: 3}
   - {fileID: 21300000, guid: daa9ef5776c83428d8c5aa4c37bb4180, type: 3}
-  - {fileID: 21300000, guid: 583a9aa9c90d24a56a3a19e71f5c7133, type: 3}
   - {fileID: 21300000, guid: bc276ff90fc424ab49654555efe739fb, type: 3}
   m_PackedSpriteNamesToIndex:
-  - Background2
-  - OptionsText
+  - title_bg
   - StartTextClear
-  - CreditsText
   - BunBun
   m_Tag: MainMenuUI
   m_IsVariant: 0
