@@ -177,7 +177,7 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(moveLeftKey)) logMsg += "[Move Left]";
             if (Input.GetKeyDown(moveRightKey)) logMsg += "[Move Right]";
             if (Input.GetKeyDown(throwKey)) logMsg += "[Throw]";
-            Debug.Log(logMsg);
+            //Debug.Log(logMsg);
         }
         UpdateState();
         UpdateMovement();

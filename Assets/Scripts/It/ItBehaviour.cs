@@ -4,9 +4,21 @@ using UnityEngine;
 
 public class ItBehaviour : MonoBehaviour
 {
-    public float speed = 8f;
-    public float trajectoryAngle = 0.75f;
-    public string playerCharacter = "Fox";
+    public class Defaults 
+    {
+        public static readonly float SPEED = 8.0f;
+        public static readonly float TRAJECTORY_ANGLE = 0.75f;
+        public static readonly float CARRY_HEIGHT = 0.5f;
+        public static readonly string PLAYER_CHARACTER = "Fox";
+        public static readonly string THROW_KEY = "z";
+    }
+
+
+    public float speed = ItBehaviour.Defaults.SPEED;
+    public float trajectoryAngle = ItBehaviour.Defaults.TRAJECTORY_ANGLE;
+    public float carryHeight = ItBehaviour.Defaults.CARRY_HEIGHT;
+    public string playerCharacter = ItBehaviour.Defaults.PLAYER_CHARACTER;
+    public string throwKey = ItBehaviour.Defaults.THROW_KEY;
 
     private bool isHeld;
     private bool isActive;
@@ -20,6 +32,8 @@ public class ItBehaviour : MonoBehaviour
         // if the object thats been collided with is the player
         // we want to trigger 'it" to be in a held state, and then
         // turn physics off for more performant updating
+        Debug.Log($"Object hit!: {col.gameObject.name}");
+
         if(col.gameObject.name == playerCharacter)
         {
             isHeld = isActive = rb.isKinematic = true;
@@ -28,7 +42,6 @@ public class ItBehaviour : MonoBehaviour
         else if(isActive) 
         {
             isActive = isHeld = false;
-            Debug.Log("HIT THE GROUND! BAAAAHH");
             Global.Instance.LifeLost(this.rb);
             // StartCoroutine(GroundHit(itSprite));
             // Tilemap Floor <-- we may want to add specific collision?
@@ -37,11 +50,14 @@ public class ItBehaviour : MonoBehaviour
     }
 
     void FixedUpdate() {
+        Debug.Log("bunbun x: " + rb.position.x);
+        Debug.Log("Camera rect x: " + Camera.main.rect.position.x);
+        Debug.Log("Camera main x: " + Camera.main.transform.position.x);
         if(isHeld){
             // update the object to be above player
-            rb.position = new Vector2(player.transform.position.x, player.transform.position.y + 1);
+            rb.position = new Vector2(player.transform.position.x, player.transform.position.y + carryHeight);
             // this is for "throwing" the object
-            if(Input.GetKeyDown(KeyCode.Space)){
+            if(Input.GetKeyDown(throwKey)){
                 isHeld = false;
                 // throwing the object on an angle, depending on player input direction
                 rb.velocity = new Vector2(Input.GetAxis("Horizontal") * (speed * trajectoryAngle), speed);

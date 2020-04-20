@@ -26,7 +26,8 @@ public class Global : MonoBehaviour
         if(this.lives == 0){
             new MainMenu().GameOver();
         } else {
-            rb.position = new Vector2(1,2);
+            var cam = Camera.main.transform.position;
+            rb.position = new Vector2(cam.x, 8);
         }
     }
 }
