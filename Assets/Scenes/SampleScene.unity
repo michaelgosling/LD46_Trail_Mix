@@ -4777,7 +4777,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.2285705
+  orthographic size: 8.609121
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -5374,7 +5374,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.05}
+  m_Offset: {x: 0, y: -0.06}
   serializedVersion: 2
   m_Radius: 0.3
 --- !u!61 &792131843
@@ -5418,7 +5418,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -5438,7 +5438,7 @@ GameObject:
   - component: {fileID: 822772210}
   - component: {fileID: 822772214}
   m_Layer: 0
-  m_Name: shrooms
+  m_Name: it
   m_TagString: It
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5459,11 +5459,11 @@ Rigidbody2D:
   m_Mass: 0.5
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0.5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &822772211
 BoxCollider2D:
@@ -5478,18 +5478,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00060904026, y: -0.02465415}
+  m_Offset: {x: 0.09482035, y: -0.0925737}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.15}
+    oldSize: {x: 2.68, y: 1.43}
     newSize: {x: 0.16, y: 0.15}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.14416575, y: 0.100691706}
+  m_Size: {x: 1.6074953, y: 0.6805033}
   m_EdgeRadius: 0
 --- !u!212 &822772212
 SpriteRenderer:
@@ -5530,7 +5530,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f106f73fc33df4c4d9a3e8a5cb54db28, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a57d3441b6d894253b5b5232a2e1a84e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5549,8 +5549,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 822772209}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.42, y: -0.26851857, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalPosition: {x: -0.5955, y: -1.7765, z: 0}
+  m_LocalScale: {x: 0.40691686, y: 0.4290218, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -5567,9 +5567,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8baa147207aaf487fb9046d7166b4d81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  playerTag: Player
+  freeFallSprite: {fileID: 21300000, guid: e548de459a29d4eb4bed98157d98f023, type: 3}
+  throwSprite: {fileID: 21300000, guid: a57d3441b6d894253b5b5232a2e1a84e, type: 3}
+  speed: 8
   trajectoryAngle: 0.75
+  carryHeight: 2.5
   playerCharacter: Fox
+  throwKey: z
   playerTag: Player
 --- !u!1 &1020933252
 GameObject:
@@ -6732,34 +6737,14 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 1088189611}
     m_ColliderPaths:
-    - - X: 250000100
-        Y: -30000041
-      - X: 250000100
-        Y: -30000000
-      - X: 260000000
-        Y: -30000000
-      - X: 260000000
+    - - X: 260000000
         Y: -20000000
       - X: 280000000
         Y: -20000000
       - X: 280000000
         Y: -10000000
-      - X: 289999900
-        Y: -10000000
-      - X: 289999900
-        Y: -10000041
-      - X: 289999959
-        Y: -10000100
-      - X: 300000041
-        Y: -10000100
-      - X: 300000100
-        Y: -10000041
-      - X: 300000100
-        Y: 41
-      - X: 300000041
-        Y: 100
       - X: 300000000
-        Y: 100
+        Y: -10000000
       - X: 300000000
         Y: 50000000
       - X: 350000000
@@ -6769,12 +6754,6 @@ CompositeCollider2D:
       - X: 290000000
         Y: 60000000
       - X: 290000000
-        Y: 100
-      - X: 289999959
-        Y: 100
-      - X: 289999900
-        Y: 41
-      - X: 289999900
         Y: 0
       - X: 286249984
         Y: 0
@@ -6799,12 +6778,6 @@ CompositeCollider2D:
       - X: 250000000
         Y: -18125000
       - X: 250000000
-        Y: -19999900
-      - X: 209999959
-        Y: -19999900
-      - X: 209999900
-        Y: -19999959
-      - X: 209999900
         Y: -20000000
       - X: -60000000
         Y: -20000000
@@ -6828,14 +6801,8 @@ CompositeCollider2D:
         Y: -20000000
       - X: -70000000
         Y: -30000000
-      - X: 209999900
+      - X: 260000000
         Y: -30000000
-      - X: 209999900
-        Y: -30000041
-      - X: 209999959
-        Y: -30000100
-      - X: 250000041
-        Y: -30000100
     - - X: -230000000
         Y: 10000000
       - X: -180000000
@@ -6854,12 +6821,12 @@ CompositeCollider2D:
       - {x: 26.000029, y: -2}
       - {x: 28, y: -1.9999708}
       - {x: 28.000029, y: -1}
-      - {x: 30.00001, y: -0.9999748}
+      - {x: 30, y: -0.99997073}
       - {x: 30.000029, y: 5}
       - {x: 35, y: 5.000029}
       - {x: 34.999973, y: 6}
       - {x: 29, y: 5.999971}
-      - {x: 28.999962, y: 0}
+      - {x: 28.999971, y: 0}
       - {x: 28.624992, y: -0.0000027}
       - {x: 28, y: -0.3125166}
       - {x: 27.999971, y: -0.375}
@@ -6871,7 +6838,7 @@ CompositeCollider2D:
       - {x: 25.999971, y: -1.375}
       - {x: 25.874996, y: -1.3750027}
       - {x: 25, y: -1.8125166}
-      - {x: 24.999971, y: -1.99999}
+      - {x: 24.999971, y: -2}
       - {x: -6, y: -1.9999707}
       - {x: -6.000015, y: -1.8124924}
       - {x: -6.8750057, y: -1.375}
