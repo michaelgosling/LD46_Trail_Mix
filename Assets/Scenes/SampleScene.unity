@@ -4822,11 +4822,11 @@ Rigidbody2D:
   m_Mass: 0.5
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0.5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &822772211
 BoxCollider2D:
@@ -4893,7 +4893,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bc276ff90fc424ab49654555efe739fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a57d3441b6d894253b5b5232a2e1a84e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4930,11 +4930,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8baa147207aaf487fb9046d7166b4d81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 12
+  freeFallSprite: {fileID: 21300000, guid: f2f36ca0c3154425c94a90586d7e24a3, type: 3}
+  throwSprite: {fileID: 21300000, guid: a57d3441b6d894253b5b5232a2e1a84e, type: 3}
+  speed: 8
   trajectoryAngle: 0.75
   carryHeight: 0.5
   playerCharacter: Fox
-  THROW_KEY: z
+  throwKey: z
 --- !u!1 &1020933252
 GameObject:
   m_ObjectHideFlags: 0
@@ -6389,7 +6391,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &1414623384
 MonoBehaviour:
@@ -6403,12 +6405,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c04de484ef44077baeb53c7c74ebb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpKey: z
+  jumpKey: space
   moveLeftKey: left
   moveRightKey: right
+  dashKey: x
   carryingVelocityFactor: 0.66
   xSpeed: 10
   ySpeed: 10
+  dashSpeedMod: 2
 --- !u!58 &1414623385
 CircleCollider2D:
   m_ObjectHideFlags: 0

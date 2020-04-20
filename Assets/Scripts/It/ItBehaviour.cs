@@ -13,7 +13,8 @@ public class ItBehaviour : MonoBehaviour
         public static readonly string THROW_KEY = "z";
     }
 
-
+    public Sprite freeFallSprite;
+    public Sprite throwSprite;
     public float speed = ItBehaviour.Defaults.SPEED;
     public float trajectoryAngle = ItBehaviour.Defaults.TRAJECTORY_ANGLE;
     public float carryHeight = ItBehaviour.Defaults.CARRY_HEIGHT;
@@ -53,6 +54,7 @@ public class ItBehaviour : MonoBehaviour
     {
         if (isHeld)
         {
+            itSprite.enabled = false;
             // update the object to be above player
             rb.position = new Vector2(player.transform.position.x, player.transform.position.y + carryHeight);
             // this is for "throwing" the object
@@ -63,6 +65,21 @@ public class ItBehaviour : MonoBehaviour
                 // make sure to turn physics back on!
                 rb.isKinematic = false;
             }
+        }
+        else 
+        {
+            itSprite.enabled = true;
+            gameObject.SetActive(true);
+            if(rb.position.y < Camera.main.transform.position.y - 10){
+                Global.Instance.LifeLost(rb);
+            }
+            //get direction of bun travel, if going down, open the chute.
+            var travel = transform.InverseTransformDirection(rb.velocity);
+            if(travel.y < -1)
+                itSprite.sprite = freeFallSprite;
+            else
+                itSprite.sprite = throwSprite;
+            Debug.Log($"Bun go: {travel.y}");
         }
     }
 

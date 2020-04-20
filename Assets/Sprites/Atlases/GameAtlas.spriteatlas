@@ -43,20 +43,22 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 57d26f392bb3b4cd5bb078f83a515e60, type: 3}
-    totalSpriteSurfaceArea: 4464
+    totalSpriteSurfaceArea: 2077420
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: f2f36ca0c3154425c94a90586d7e24a3, type: 3}
+  - {fileID: 21300000, guid: a57d3441b6d894253b5b5232a2e1a84e, type: 3}
   - {fileID: 21300000, guid: c8a742c1f2ebb43b9afe34a47304c051, type: 3}
   - {fileID: 21300000, guid: 8bc3c2c2a565342aab778fd8e874313a, type: 3}
   - {fileID: 21300000, guid: 72de0c64f2c6a498096698322c976a67, type: 3}
   - {fileID: 21300000, guid: 077f0469c420a4365bc67943783293df, type: 3}
-  - {fileID: 21300000, guid: f106f73fc33df4c4d9a3e8a5cb54db28, type: 3}
   m_PackedSpriteNamesToIndex:
+  - parachute_bun
+  - BunBun
   - player-idle-2
   - player-idle-4
   - player-idle-1
   - player-idle-3
-  - shrooms
   m_Tag: GameAtlas
   m_IsVariant: 0
