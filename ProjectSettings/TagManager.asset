@@ -6,6 +6,9 @@ TagManager:
   tags:
   - It
   - Floor
+  - SpawnPoint
+  - Wall
+  - Goal
   layers:
   - Default
   - TransparentFX

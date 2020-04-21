@@ -27,6 +27,10 @@ public class Global : MonoBehaviour
         it = GameObject.FindWithTag("It").GetComponent<ItBehaviour>();
     }
 
+    public void CompleteLevel() {
+        new MainMenu().ReturnToMain();
+    }
+
     public void LifeLost(Rigidbody2D rb)
     {
         // var cam = Camera.main.transform.position;
